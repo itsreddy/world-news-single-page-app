@@ -5,26 +5,26 @@ import "./News.css";
 
 const countriesAllowed =
   "aearataubebgbrcachcncocuczdeegfrgbgrhkhuidieilinitjpkrltlvmamxmyngnlnonzphplptrorsrusasesgsiskthtrtwuausveza";
+const set1 = new Set(countriesAllowed.match(/.{1,2}/g));
 
 const notValid = (cid) => {
-  const set1 = new Set(countriesAllowed.match(/.{1,2}/g));
-  if (set1.has(cid.toString().toLowerCase())) {
+  if (cid && set1.has(cid.toString().toLowerCase())) {
     return false;
   } else {
     return true;
   }
 };
 
-const getNewsArticles = async (cid, history) => {
-  // console.log(cid);
-  // console.log(notValid(cid));
-  if (notValid(cid)) {
-    history.push("/world");
-  } else {
-    const newsArticles = await axios.get(`http://localhost:8080/news/${cid}`);
-    // console.log(newsArticles.data);
-    // console.log("getnewsarticles");
-    return newsArticles.data;
+const getNewsArticles = async (cid, history, setArticles) => {
+  try {
+    if (notValid(cid)) {
+      history.push("/world");
+    } else {
+      const newsArticles = await axios.get(`http://localhost:8080/news/${cid}`);
+      setArticles(newsArticles.data);
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -32,13 +32,11 @@ const News = () => {
   const { cid } = useParams();
   const history = useHistory();
 
-  // const [articles, setArticles] = useState(getNewsArticles(cid));
-  // useEffect(() => {
-  //   setArticles(getNewsArticles(cid, history));
-  //   console.log(articles);
-  // }, [cid]);
+  const [articles, setArticles] = useState();
+  useEffect(() => {
+    setArticles(getNewsArticles(cid, history, setArticles));
+  }, [cid]);
 
-  const articles = getNewsArticles(cid, history);
   console.log(articles);
 
   return <div className='News'>News = {cid}</div>;
