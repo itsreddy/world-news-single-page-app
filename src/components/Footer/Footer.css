@@ -1,7 +1,7 @@
 .footer {
   width: 100%;
   cursor: pointer;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   display: flex;
   justify-content: left;
@@ -11,5 +11,7 @@
   padding: 0;
   z-index: 100;
   height: fit-content;
+  font-family: monospace;
+  font-size: smaller;
   /* height: 2rem; */
 }

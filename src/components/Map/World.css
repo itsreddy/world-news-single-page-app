@@ -5,5 +5,14 @@
 
 .map-container {
   padding-bottom: 20px;
-  height: min-content;
+  width: "95%";
+  margin: "0 auto";
+}
+
+.recenterButton {
+  position: fixed !important;
+  bottom: 0;
+  margin: 20px !important;
+  margin-bottom: 40px !important;
+  background-color: grey !important;
 }
